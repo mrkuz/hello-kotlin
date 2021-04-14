@@ -1,0 +1,7 @@
+person:
+  firstName: First
+  # middleName
+  lastName: Last
+  age: 33
+  weight: 70.4
+  married: true
