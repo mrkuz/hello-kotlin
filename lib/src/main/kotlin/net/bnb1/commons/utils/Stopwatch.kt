@@ -34,7 +34,7 @@ class Stopwatch(val name: String, autoStart: Boolean = true) {
         checkpoint = System.currentTimeMillis()
         val sinceStart = if (started == 0L) 0L else checkpoint - started
         val sinceLastCheckpoint = if (lastCheckpoint == 0L) 0L else checkpoint - lastCheckpoint
-        logger.debug("${message}: ${sinceStart}ms (${sinceLastCheckpoint}ms)")
+        logger.debug("$message: ${sinceStart}ms (${sinceLastCheckpoint}ms)")
         return sinceStart.toInt()
     }
 

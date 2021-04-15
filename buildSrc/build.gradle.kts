@@ -16,6 +16,7 @@ dependencies {
     implementation("com.github.jengelman.gradle.plugins:shadow:6.1.0")
     implementation("gradle.plugin.com.google.cloud.tools:jib-gradle-plugin:2.8.0")
     implementation("com.adarshr:gradle-test-logger-plugin:2.1.1")
+    implementation("org.jlleitschuh.gradle:ktlint-gradle:10.0.0")
 }
 
 kotlinDslPluginOptions {

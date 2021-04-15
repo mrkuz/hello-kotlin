@@ -33,7 +33,8 @@ fun main() {
         single { TaskScheduler() }
         single(autoStart = true) {
             LoggerFactory.setThreshold(
-                "n.b.c.h.HttpServer", when (profile) {
+                "n.b.c.h.HttpServer",
+                when (profile) {
                     "dev" -> LogLevel.DEBUG
                     else -> LogLevel.OFF
                 }

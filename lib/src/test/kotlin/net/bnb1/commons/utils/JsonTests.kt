@@ -29,5 +29,4 @@ class JsonTests : FunSpec({
                 .filterNot { it == '\n' }
         }
     }
-});
-
+})

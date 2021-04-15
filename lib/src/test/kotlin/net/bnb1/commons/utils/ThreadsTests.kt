@@ -8,7 +8,7 @@ import java.util.concurrent.ThreadFactory
 class ThreadsTests : FunSpec({
 
     context("Threads.newFactory") {
-        var factory: ThreadFactory? = null;
+        var factory: ThreadFactory? = null
 
         test("Create new factory") {
             factory = Threads.newFactory("test")
@@ -16,7 +16,7 @@ class ThreadsTests : FunSpec({
         }
 
         test("Use factory to create thread") {
-            val thread = factory?.newThread {}!!;
+            val thread = factory?.newThread {}!!
             thread.isDaemon shouldBe true
             thread.name shouldBe "test"
         }

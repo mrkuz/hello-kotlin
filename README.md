@@ -5,7 +5,7 @@ Simple example application to explore the Kotlin programming language.
 This project is set up as Gradle multi-project build, consisting of two subprojects:
 
 - app: The actual application
-- lib: Common utilities and functions used by the application 
+- lib: Common utilities and functions used by the application
 
 # Application
 
@@ -34,15 +34,15 @@ Provides basic building blocks for applications, including
 
 ## Profiles
 
-Profiles can be used to control the behaviour of the application in different environments.
-The active profile is read from the environment variable `BNB1_PROFILE`. If not set, 'default' is used.
+Profiles can be used to control the behaviour of the application in different environments. The active profile is read
+from the environment variable `BNB1_PROFILE`. If not set, 'default' is used.
 
 `gradle run` activates the profile 'dev'.
 
 ## Development mode
 
-Development mode watches the source directory for changes and stops the application if a file is modified, added or deleted.
-This is intended to be used with `gradle run -t` to trigger compilation and restart on code changes.
+Development mode watches the source directory for changes and stops the application if a file is modified, added or
+deleted. This is intended to be used with `gradle run -t` to trigger compilation and restart on code changes.
 
 # Testing
 
@@ -63,6 +63,7 @@ The build process is configured using Gradle Kotlin DSL.
 - Jib: Containerizes app ([Link](https://plugins.gradle.org/plugin/com.google.cloud.tools.jib))
 - Test Logger: Prints test logs to console ([Link](https://plugins.gradle.org/plugin/com.adarshr.test-logger))
 - kotlinx.benchmark: Runs JMH benchmarks ([Link](https://plugins.gradle.org/plugin/org.jetbrains.kotlinx.benchmark))
+- Ktlint Gradle: Runs ktlint ([Link](https://plugins.gradle.org/plugin/org.jlleitschuh.gradle.ktlint))
 
 ## Custom extensions
 
@@ -76,8 +77,10 @@ The build process is configured using Gradle Kotlin DSL.
 - Check for dependency updates: `./gradlew dependencyUpdates`
 - Run application: `./gradlew run`
 - Continuous run: `./gradlew run -t`
+- Run ktlint: `./gradlew ktlintCheck`
 - Run tests: `./gradlew test`
 - Run benchmarks: `./gradlew benchmark`
 - Build project and create JAR: `./gradlew build`
 - Build Docker image: `./gradlew jibDockerBuild`
 - Build documentation: `./gradlew dokkaHtml`
+- Update Gradle wrapper: `./gradlew wrapper --gradle-version=X.Y.Z`

@@ -5,6 +5,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.allopen.gradle.AllOpenExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jlleitschuh.gradle.ktlint.KtlintExtension
 
 plugins {
     kotlin("jvm")
@@ -14,6 +15,7 @@ plugins {
     id("org.jetbrains.kotlinx.benchmark")
     id("org.jetbrains.dokka")
     id("com.adarshr.test-logger")
+    id("org.jlleitschuh.gradle.ktlint")
 }
 
 repositories {
@@ -44,6 +46,11 @@ tasks.withType<KotlinCompile>().configureEach {
         freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn")
         jvmTarget = "1.8"
     }
+}
+
+configure<KtlintExtension> {
+    enableExperimentalRules.set(true)
+    disabledRules.set(setOf("no-wildcard-imports"))
 }
 
 tasks.named<Test>("test").configure {
