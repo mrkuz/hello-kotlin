@@ -26,6 +26,8 @@ tasks.named<ShadowJar>("shadowJar").configure {
 
 // Create build.properties with details about the latest build
 tasks.create("generateBuildProperties") {
+    // Ensure that this task is always executed
+    outputs.upToDateWhen { false }
     doLast {
         val file = File("$buildDir/resources/main/build.properties")
         file.parentFile.mkdirs()
