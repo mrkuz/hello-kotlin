@@ -135,7 +135,7 @@ class HttpServer(
                 if (key.attachment() != null) {
                     val channel = key.channel() as SocketChannel
                     val attachment = key.attachment() as Attachment
-                    val elapsed = System.currentTimeMillis() - attachment.timestamp;
+                    val elapsed = System.currentTimeMillis() - attachment.timestamp
                     if (elapsed > connectionTimeout) {
                         logger.debug("Connection timed out")
                         channel.close()
@@ -283,7 +283,6 @@ class HttpServer(
             handlers.add(HandlerRegistration(method, path, handler))
         }
     }
-
 }
 
 /**
