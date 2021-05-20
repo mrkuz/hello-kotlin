@@ -20,20 +20,18 @@ plugins {
 
 repositories {
     mavenCentral()
-    jcenter()
 }
 
 dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
     // Testing
     testImplementation("org.jetbrains.kotlin:kotlin-test")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
-    testImplementation("io.kotest:kotest-runner-junit5:4.4.3")
-    testImplementation("io.kotest:kotest-assertions-core:4.4.3")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.2")
+    testImplementation("io.kotest:kotest-runner-junit5:4.6.0")
+    testImplementation("io.kotest:kotest-assertions-core:4.6.0")
     testImplementation("io.mockk:mockk:1.11.0")
 }
 
@@ -41,8 +39,6 @@ ProjectProperties.load(rootDir.absolutePath)
 
 tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions {
-        // Use Kotlin Intermediate Representation backend
-        useIR = true
         freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn")
         jvmTarget = "1.8"
     }
@@ -80,7 +76,7 @@ sourceSets.create("benchmark") {
         compileClasspath += mainSourceSet.output + mainSourceSet.compileClasspath
         runtimeClasspath += mainSourceSet.output + mainSourceSet.runtimeClasspath
         dependencies {
-            implementation("org.jetbrains.kotlinx:kotlinx-benchmark-runtime:0.3.0")
+            implementation("org.jetbrains.kotlinx:kotlinx-benchmark-runtime:0.3.1")
         }
     }
 }

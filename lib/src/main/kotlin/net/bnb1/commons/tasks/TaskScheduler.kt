@@ -12,9 +12,10 @@ import kotlin.concurrent.schedule
  * The scheduler needs to be [started][start].
  */
 @OptIn(ExperimentalCoroutinesApi::class, ObsoleteCoroutinesApi::class)
-class TaskScheduler(private val dispatcher: CoroutineDispatcher = newSingleThreadContext("task")) :
+class TaskScheduler(dispatcher: CoroutineDispatcher = newSingleThreadContext("task")) :
     LifecycleComponent {
 
+    private val scope = CoroutineScope(dispatcher)
     private val support = LifecycleSupport(this)
     private val timer = Timer("scheduler", true)
     private val tasks = mutableListOf<TaskDefinition>()
@@ -29,7 +30,7 @@ class TaskScheduler(private val dispatcher: CoroutineDispatcher = newSingleThrea
     override fun start() = support.start {
         tasks.forEach {
             timer.schedule(it.delay, it.period) {
-                GlobalScope.launch(dispatcher) {
+                scope.launch {
                     it.action.run()
                 }
             }
@@ -41,6 +42,7 @@ class TaskScheduler(private val dispatcher: CoroutineDispatcher = newSingleThrea
      */
     override fun stop() = support.stop {
         timer.cancel()
+        scope.cancel()
     }
 
     /**
@@ -50,7 +52,7 @@ class TaskScheduler(private val dispatcher: CoroutineDispatcher = newSingleThrea
         tasks.add(definition)
         if (running) {
             timer.schedule(definition.delay, definition.period) {
-                GlobalScope.launch(dispatcher) {
+                scope.launch {
                     definition.action.run()
                 }
             }

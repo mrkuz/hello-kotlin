@@ -7,10 +7,10 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.string.shouldHaveLength
 import io.kotest.matchers.string.shouldMatch
 import net.bnb1.commons.utils.UTF8
+import net.bnb1.commons.utils.milliseconds
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
 import kotlin.time.ExperimentalTime
-import kotlin.time.milliseconds
 
 @ExperimentalTime
 class SimpleLoggerTests : FunSpec({

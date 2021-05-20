@@ -8,6 +8,7 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import net.bnb1.commons.event.EventBus
@@ -17,9 +18,10 @@ import net.bnb1.commons.logging.SimpleLogger
 import net.bnb1.commons.tasks.TaskScheduler
 import net.bnb1.commons.test.Cat
 import net.bnb1.commons.test.TestEvent
+import net.bnb1.commons.utils.milliseconds
 import kotlin.time.ExperimentalTime
-import kotlin.time.milliseconds
 
+@OptIn(DelicateCoroutinesApi::class)
 @ExperimentalTime
 class ApplicationContextTests : FunSpec({
 

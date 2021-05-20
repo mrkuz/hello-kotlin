@@ -55,7 +55,7 @@ configure<JibExtension> {
     }
     to {
         image = "${rootProject.name}:latest"
-        tags = setOf("${projectProperty("version")}")
+        tags = setOf(projectProperty("version"))
     }
     // Include all files from extra in the image
     extraDirectories {

@@ -195,8 +195,8 @@ class HttpServerTests : FunSpec({
                 socket.getOutputStream().write("GET /te".toByteArray())
                 delay(200)
                 shouldThrow<SocketException> {
-                    socket.getOutputStream().write('s'.toInt())
-                    socket.getOutputStream().write('t'.toInt())
+                    socket.getOutputStream().write('s'.code)
+                    socket.getOutputStream().write('t'.code)
                 }
             }
         }

@@ -16,10 +16,11 @@ import kotlin.reflect.KClass
 class BeanContainer(
     private val name: String,
     val activeProfile: String = Environment.getActiveProfile(),
-    private val dispatcher: CoroutineDispatcher = Dispatchers.Unconfined
+    dispatcher: CoroutineDispatcher = Dispatchers.Unconfined
 ) : LifecycleComponent {
 
     private val logger = logger()
+    private val scope = CoroutineScope(dispatcher)
     private val support = LifecycleSupport(this)
 
     private val factories = mutableMapOf<KClass<*>, BeanFactory<Any>>()
@@ -41,7 +42,7 @@ class BeanContainer(
         runBlocking { factories.keys.forEach { resolve(it) } }
         runBlocking {
             runnables.forEach {
-                GlobalScope.launch(dispatcher) {
+                scope.launch {
                     try {
                         it.run()
                     } catch (e: Exception) {
@@ -59,9 +60,10 @@ class BeanContainer(
     }
 
     /**
-     * Currently no-op.
+     * Stops the container.
      */
     override fun stop() = support.stop {
+        scope.cancel()
     }
 
     /**
@@ -136,7 +138,7 @@ class BeanContainer(
     private fun <T : Any> resolve(clazz: KClass<T>): Deferred<T>? {
         val key = factories.keys.find { clazz.java.isAssignableFrom(it.java) } ?: return null
         return beans.computeIfAbsent(key) {
-            GlobalScope.async(dispatcher) {
+            scope.async {
                 try {
                     val bean = factories[key]!!.invoke()
                     if (bean === Unit) throw Exception("Unable to create kotlin.Unit")

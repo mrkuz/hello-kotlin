@@ -21,6 +21,7 @@ class ByteBufferPoolTests : FunSpec({
         pool.free shouldBe 2
     }
 
+    @Suppress("BlockingMethodInNonBlockingContext")
     test("Concurrent allocation") {
         val pool = ByteBufferPool(100, CAPACITY)
         val executor = Executors.newFixedThreadPool(8)
@@ -39,11 +40,12 @@ class ByteBufferPoolTests : FunSpec({
         buffers.size shouldBe 100
     }
 
+    @Suppress("BlockingMethodInNonBlockingContext")
     test("Concurrent allocation and release") {
         val pool = ByteBufferPool(1, CAPACITY)
         val executor = Executors.newFixedThreadPool(8)
         val latch = CountDownLatch(100)
-        val buffers = mutableSetOf<Int>()
+        val buffers = Collections.synchronizedSet(mutableSetOf<Int>())
         for (i in 0 until latch.count) {
             executor.submit {
                 val buffer = pool.allocate()

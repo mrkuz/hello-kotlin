@@ -6,8 +6,8 @@ import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import net.bnb1.commons.test.TestEvent
+import net.bnb1.commons.utils.milliseconds
 import kotlin.time.ExperimentalTime
-import kotlin.time.milliseconds
 
 @ExperimentalTime
 class EventBusTests : FunSpec({

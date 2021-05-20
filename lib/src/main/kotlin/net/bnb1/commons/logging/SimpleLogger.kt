@@ -8,7 +8,7 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalCoroutinesApi::class, ObsoleteCoroutinesApi::class)
-private val dispatcher = newSingleThreadContext("logger")
+private val scope = CoroutineScope(newSingleThreadContext("logger"))
 
 /**
  * Simple logger implementation printing the messages to `stdout`.
@@ -26,7 +26,7 @@ class SimpleLogger(
     override fun debug(message: () -> String) {
         if (isBelowThreshold(LogLevel.DEBUG)) return
         val thread = Thread.currentThread().name
-        GlobalScope.launch(dispatcher) { log(thread, LogLevel.DEBUG, message()) }
+        scope.launch { log(thread, LogLevel.DEBUG, message()) }
     }
 
     override fun debug(message: String) {
@@ -37,7 +37,7 @@ class SimpleLogger(
     override fun info(message: () -> String) {
         if (isBelowThreshold(LogLevel.INFO)) return
         val thread = Thread.currentThread().name
-        GlobalScope.launch(dispatcher) { log(thread, LogLevel.INFO, message()) }
+        scope.launch { log(thread, LogLevel.INFO, message()) }
     }
 
     override fun info(message: String) {
@@ -48,7 +48,7 @@ class SimpleLogger(
     override fun warn(message: () -> String) {
         if (isBelowThreshold(LogLevel.WARN)) return
         val thread = Thread.currentThread().name
-        GlobalScope.launch(dispatcher) { log(thread, LogLevel.WARN, message()) }
+        scope.launch { log(thread, LogLevel.WARN, message()) }
     }
 
     override fun warn(message: String) {
@@ -59,13 +59,13 @@ class SimpleLogger(
     fun error(message: () -> String) {
         if (isBelowThreshold(LogLevel.ERROR)) return
         val thread = Thread.currentThread().name
-        GlobalScope.launch(dispatcher) { log(thread, LogLevel.ERROR, message(), null) }
+        scope.launch { log(thread, LogLevel.ERROR, message(), null) }
     }
 
     override fun error(message: () -> String, throwable: Throwable?) {
         if (isBelowThreshold(LogLevel.ERROR)) return
         val thread = Thread.currentThread().name
-        GlobalScope.launch(dispatcher) { log(thread, LogLevel.ERROR, message(), throwable) }
+        scope.launch { log(thread, LogLevel.ERROR, message(), throwable) }
     }
 
     override fun error(message: String, throwable: Throwable?) {

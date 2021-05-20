@@ -23,13 +23,14 @@ private const val BUFFER_SIZE: Int = 512
 class HttpServer(
     private val port: Int = 8080,
     private val connectionTimeout: Long = 2000,
-    private val dispatcher: CoroutineDispatcher = newFixedThreadPoolContext(
+    dispatcher: CoroutineDispatcher = newFixedThreadPoolContext(
         Runtime.getRuntime().availableProcessors(),
         "http-worker"
     )
 ) : LifecycleComponent {
 
     private val logger = logger()
+    private val scope = CoroutineScope(dispatcher)
     private val support = LifecycleSupport(this)
     private val executor = Executors.newSingleThreadExecutor(Threads.newFactory("http"))
     private val handlers = mutableListOf<HandlerRegistration>()
@@ -63,6 +64,7 @@ class HttpServer(
         serverSocket.close()
         selector.close()
         executor.shutdown()
+        scope.cancel()
     }
 
     /**
@@ -165,7 +167,7 @@ class HttpServer(
 
     private fun read(key: SelectionKey) {
         key.interestOps(0)
-        GlobalScope.launch(dispatcher) {
+        scope.launch {
             val channel = key.channel() as SocketChannel
             val attachment = key.attachment() as Attachment
             val parser = attachment.parser ?: HttpParser()
@@ -214,7 +216,7 @@ class HttpServer(
 
     private fun write(key: SelectionKey) {
         key.interestOps(0)
-        GlobalScope.launch(dispatcher) {
+        scope.launch {
             val channel = key.channel() as SocketChannel
             val attachment = key.attachment() as Attachment
             var buffer: ByteBuffer? = attachment.writeBuffer

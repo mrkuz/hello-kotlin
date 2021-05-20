@@ -1,15 +1,25 @@
 package net.bnb1.commons.event
 
 import kotlinx.coroutines.*
+import net.bnb1.commons.lifecycle.LifecycleComponent
+import net.bnb1.commons.lifecycle.LifecycleSupport
 import kotlin.reflect.KClass
 
 /**
  * Simple event bus.
  */
 @OptIn(ExperimentalCoroutinesApi::class, ObsoleteCoroutinesApi::class)
-class EventBus(private val dispatcher: CoroutineDispatcher = newSingleThreadContext("event")) {
+class EventBus(dispatcher: CoroutineDispatcher = newSingleThreadContext("event")) : LifecycleComponent {
 
+    private val scope = CoroutineScope(dispatcher)
+    private val support = LifecycleSupport(this)
     private val map = mutableMapOf<KClass<*>, MutableList<EventListener<*>>>()
+
+    override val running by support
+
+    override fun name(): String = "Event bus"
+    override fun start() = support.start {}
+    override fun stop() = support.stop { scope.cancel() }
 
     /**
      * Subscribes [listener] for an event of type [clazz].
@@ -27,7 +37,7 @@ class EventBus(private val dispatcher: CoroutineDispatcher = newSingleThreadCont
     @Suppress("UNCHECKED_CAST")
     fun <T : Any> publish(event: T) {
         map[event::class]?.forEach {
-            GlobalScope.launch(dispatcher) { (it as EventListener<T>).onEvent(event) }
+            scope.launch { (it as EventListener<T>).onEvent(event) }
         }
     }
 }

@@ -3,8 +3,8 @@ package net.bnb1.commons.http
 import net.bnb1.commons.utils.UTF8
 import java.nio.ByteBuffer
 
-private const val CR: Byte = '\r'.toByte()
-private const val LF: Byte = '\n'.toByte()
+private const val CR = '\r'.code.toByte()
+private const val LF = '\n'.code.toByte()
 
 /**
  * Simple HTTP parser.
