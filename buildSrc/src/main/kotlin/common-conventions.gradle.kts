@@ -2,6 +2,7 @@ import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import kotlinx.benchmark.gradle.BenchmarksExtension
 import net.bnb1.gradle.ProjectProperties
 import org.gradle.api.tasks.testing.logging.TestLogEvent
+import org.gradle.jvm.tasks.Jar
 import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.allopen.gradle.AllOpenExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -78,6 +79,14 @@ sourceSets.create("benchmark") {
         dependencies {
             implementation("org.jetbrains.kotlinx:kotlinx-benchmark-runtime:0.3.1")
         }
+    }
+}
+
+afterEvaluate {
+    tasks.named<Jar>("benchmarkBenchmarkJar").configure {
+        // Required workaround. Otherwise, running the benchmarks will complain because of
+        // duplicate META-INF/versions/9/module-info.class
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
     }
 }
 
