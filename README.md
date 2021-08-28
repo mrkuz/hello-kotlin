@@ -74,13 +74,13 @@ The build process is configured using Gradle Kotlin DSL.
 
 - List all tasks: `./gradlew tasks`
 - Clean: `./gradlew clean`
-- Check for dependency updates: `./gradlew dependencyUpdates`
+- Check for dependency updates: `./gradlew showDependencyUpdates`
 - Run application: `./gradlew run`
 - Continuous run: `./gradlew run -t`
-- Run ktlint: `./gradlew ktlintCheck`
+- Run ktlint: `./gradlew lint`
 - Run tests: `./gradlew test`
-- Run benchmarks: `./gradlew benchmark`
+- Run benchmarks: `./gradlew runBenchmarks`
 - Build project and create JAR: `./gradlew build`
-- Build Docker image: `./gradlew jibDockerBuild`
-- Build documentation: `./gradlew dokkaHtml`
+- Build Docker image: `./gradlew buildImage`
+- Build documentation: `./gradlew generateDocumentation``
 - Update Gradle wrapper: `./gradlew wrapper --gradle-version=X.Y.Z`

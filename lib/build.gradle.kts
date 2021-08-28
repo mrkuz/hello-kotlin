@@ -1,5 +1,6 @@
 plugins {
-    id("lib-conventions")
+    id("org.jetbrains.kotlin.jvm") version "1.5.0"
+    id("net.bnb1.kradle-lib") version "main-SNAPSHOT"
 }
 
 dependencies {
@@ -11,4 +12,14 @@ dependencies {
     implementation("com.charleskorn.kaml:kaml:0.28.3")
     // Testing
     testImplementation("com.squareup.okhttp3:okhttp:4.9.1")
+}
+
+group = "net.bnb1.hello"
+version = "1.0-SNAPSHOT"
+
+kradle {
+    tests {
+        useKotest()
+        useMockk()
+    }
 }
