@@ -89,7 +89,7 @@ class BeanContainer(
             return
         }
         if (!override && has(clazz)) {
-            throw BeanException("Bean of type '${clazz.qualifiedName}' already exists")
+            throw BeanContainerException("Bean of type '${clazz.qualifiedName}' already exists")
         }
         factories[clazz] = supplier
     }
@@ -107,7 +107,7 @@ class BeanContainer(
      * Throws an [Exception] if no bean of type is registered.
      */
     suspend fun <T : Any> await(clazz: KClass<T>): T {
-        val deferred = resolve(clazz) ?: throw BeanException("${clazz.simpleName} not available")
+        val deferred = resolve(clazz) ?: throw BeanContainerException("${clazz.simpleName} not available")
         return deferred.await()
     }
 
@@ -118,9 +118,9 @@ class BeanContainer(
      */
     operator fun <T : Any> get(clazz: KClass<T>): T {
         if (support.isStopped()) {
-            throw BeanException("Container is not running")
+            throw BeanContainerException("Container is not running")
         }
-        val deferred = resolve(clazz) ?: throw BeanException("${clazz.simpleName} not available")
+        val deferred = resolve(clazz) ?: throw BeanContainerException("${clazz.simpleName} not available")
         return deferred.getCompleted()
     }
 
@@ -129,7 +129,7 @@ class BeanContainer(
      */
     fun all(): List<Any> {
         if (support.isStopped()) {
-            throw BeanException("Container is not running")
+            throw BeanContainerException("Container is not running")
         }
         return beans.values.map { it.getCompleted() }.toList()
     }
@@ -153,7 +153,7 @@ class BeanContainer(
 
     private fun checkProfile(profile: String?): Boolean {
         if (support.isRunning()) {
-            throw BeanException("Container is already running")
+            throw BeanContainerException("Container is already running")
         }
         return profile == null || activeProfile == profile
     }

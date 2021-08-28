@@ -69,11 +69,11 @@ class ApplicationContextTests : FunSpec({
         }
 
         test("Try to register singleton") {
-            shouldThrow<BeanException> { context.single { Cat() } }
+            shouldThrow<BeanContainerException> { context.single { Cat() } }
         }
 
         test("Try to invoke function") {
-            shouldThrow<BeanException> { context.exec { counter++ } }
+            shouldThrow<BeanContainerException> { context.exec { counter++ } }
         }
     }
 
@@ -96,7 +96,7 @@ class ApplicationContextTests : FunSpec({
 
         test("Register multiple beans of same type") {
             context.single { Cat() }
-            shouldThrow<BeanException> { context.single { Cat() } }
+            shouldThrow<BeanContainerException> { context.single { Cat() } }
         }
 
         test("Override bean") {
@@ -137,7 +137,7 @@ class ApplicationContextTests : FunSpec({
 
         test("Try get bean before context starts") {
             context.single { Cat() }
-            shouldThrow<BeanException> { context.get<Cat>() }
+            shouldThrow<BeanContainerException> { context.get<Cat>() }
         }
 
         test("Get bean after context started") {
@@ -149,7 +149,7 @@ class ApplicationContextTests : FunSpec({
 
         test("Bean not found") {
             context.start()
-            shouldThrow<BeanException> { context.get<Cat>() }
+            shouldThrow<BeanContainerException> { context.get<Cat>() }
         }
     }
 
@@ -170,7 +170,7 @@ class ApplicationContextTests : FunSpec({
 
         test("Bean not found") {
             context.start()
-            shouldThrow<BeanException> { context.await<Cat>() }
+            shouldThrow<BeanContainerException> { context.await<Cat>() }
         }
     }
 
@@ -205,7 +205,7 @@ class ApplicationContextTests : FunSpec({
     context("Events") {
 
         test("Try to subscribe without event bus provided") {
-            shouldThrow<BeanException> { context.event<TestEvent> {} }
+            shouldThrow<BeanContainerException> { context.event<TestEvent> {} }
         }
 
         test("Subscribe for event") {
@@ -230,7 +230,7 @@ class ApplicationContextTests : FunSpec({
     context("Scheduling") {
 
         test("Try to schedule task without scheduler provided") {
-            shouldThrow<BeanException> { context.schedule(0, 100) {} }
+            shouldThrow<BeanContainerException> { context.schedule(0, 100) {} }
         }
 
         test("Schedule task") {
@@ -254,7 +254,7 @@ class ApplicationContextTests : FunSpec({
     context("Logging") {
 
         test("Try to access logger without provided") {
-            shouldThrow<BeanException> { context.logger }
+            shouldThrow<BeanContainerException> { context.logger }
         }
 
         test("Get logger") {

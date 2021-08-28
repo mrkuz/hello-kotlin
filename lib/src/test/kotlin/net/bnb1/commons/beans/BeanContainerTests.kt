@@ -53,11 +53,11 @@ class BeanContainerTests : FunSpec({
         }
 
         test("Try to register singleton") {
-            shouldThrow<BeanException> { container.single(Cat::class) { Cat() } }
+            shouldThrow<BeanContainerException> { container.single(Cat::class) { Cat() } }
         }
 
         test("Try to invoke function") {
-            shouldThrow<BeanException> { container.exec { counter++ } }
+            shouldThrow<BeanContainerException> { container.exec { counter++ } }
         }
     }
 
@@ -80,7 +80,7 @@ class BeanContainerTests : FunSpec({
 
         test("Register multiple beans of same type") {
             container.single(Cat::class) { Cat() }
-            shouldThrow<BeanException> { container.single(Cat::class) { Cat() } }
+            shouldThrow<BeanContainerException> { container.single(Cat::class) { Cat() } }
         }
 
         test("Override bean") {
@@ -121,7 +121,7 @@ class BeanContainerTests : FunSpec({
 
         test("Try get bean before container starts") {
             container.single(Cat::class) { Cat() }
-            shouldThrow<BeanException> { container[Cat::class] }
+            shouldThrow<BeanContainerException> { container[Cat::class] }
         }
 
         test("Get bean after container started") {
@@ -133,7 +133,7 @@ class BeanContainerTests : FunSpec({
 
         test("Bean not found") {
             container.start()
-            shouldThrow<BeanException> { container[Cat::class] }
+            shouldThrow<BeanContainerException> { container[Cat::class] }
         }
     }
 
@@ -141,7 +141,7 @@ class BeanContainerTests : FunSpec({
 
         test("Try get all beans before container starts") {
             container.single(Cat::class) { Cat() }
-            shouldThrow<BeanException> { container.all() }
+            shouldThrow<BeanContainerException> { container.all() }
         }
 
         test("Get all beans after container started") {
@@ -168,7 +168,7 @@ class BeanContainerTests : FunSpec({
 
         test("Bean not found") {
             container.start()
-            shouldThrow<BeanException> { container.await(Cat::class) }
+            shouldThrow<BeanContainerException> { container.await(Cat::class) }
         }
     }
 
