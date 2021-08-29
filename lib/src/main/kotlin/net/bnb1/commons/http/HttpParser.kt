@@ -40,9 +40,7 @@ class HttpParser(bufferSize: Int = 512) {
         if (done) return
         ensureCapacity(source)
 
-        while (source.remaining() > 0) {
-            if (done) break
-
+        while (!done && source.remaining() > 0) {
             val currentByte = source.get()
             buffer.put(currentByte)
 
@@ -60,8 +58,8 @@ class HttpParser(bufferSize: Int = 512) {
                     buffer.get(0, body)
                     buffer.clear()
 
-                    done = true
                     result = result.copy(body = body)
+                    done = true
                     break
                 }
             }
@@ -72,6 +70,7 @@ class HttpParser(bufferSize: Int = 512) {
 
     private fun processLine(line: String) {
         if (linePos == 0) {
+            @Suppress("SwallowedException")
             try {
                 val (method, path, version) = line.split(" ")
                 result = result.copy(method = HttpMethod.valueOf(method), path = path)
@@ -94,6 +93,7 @@ class HttpParser(bufferSize: Int = 512) {
             return
         }
 
+        @Suppress("SwallowedException")
         try {
             val (name, value) = line.split(":", limit = 2)
             if (name.trim().equals(HttpHeader.CONTENT_LENGTH.headerName, ignoreCase = true)) {

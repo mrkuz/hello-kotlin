@@ -17,7 +17,7 @@ class ByteBufferPool(
 
     init {
         _size.set(startSize)
-        for (i in 1..startSize) {
+        repeat(startSize) {
             buffers.add(allocateInternal(defaultCapacity))
         }
     }
@@ -34,17 +34,17 @@ class ByteBufferPool(
      */
     fun allocate(capacity: Int = defaultCapacity): ByteBuffer {
         var result: ByteBuffer? = null
-        val back = mutableListOf<ByteBuffer>()
+        val unusedBuffers = mutableListOf<ByteBuffer>()
         while (!buffers.isEmpty()) {
             val buffer = buffers.poll() ?: break
             if (buffer.capacity() >= capacity) {
                 result = buffer
                 break
             } else {
-                back.add(buffer)
+                unusedBuffers.add(buffer)
             }
         }
-        buffers.addAll(back)
+        buffers.addAll(unusedBuffers)
         if (result != null) {
             return result
         }

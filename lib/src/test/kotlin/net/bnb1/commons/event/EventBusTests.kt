@@ -24,18 +24,14 @@ class EventBusTests : FunSpec({
     }
 
     test("Subscribe multiple times and publish once") {
-        for (i in 1..10) {
-            eventBus.subscribe(TestEvent::class) { counter++ }
-        }
+        repeat(10) { eventBus.subscribe(TestEvent::class) { counter++ } }
         eventBus.publish(TestEvent())
         eventually(100.milliseconds) { counter shouldBe 10 }
     }
 
     test("Subscribe once and publish multiple times") {
         eventBus.subscribe(TestEvent::class) { counter++ }
-        for (i in 1..10) {
-            eventBus.publish(TestEvent())
-        }
+        repeat(10) { eventBus.publish(TestEvent()) }
         eventually(100.milliseconds) { counter shouldBe 10 }
     }
 

@@ -2,6 +2,7 @@ package net.bnb1.commons.utils
 
 import java.text.CharacterIterator
 import java.text.StringCharacterIterator
+import java.util.Locale
 import kotlin.math.abs
 
 /**
@@ -13,6 +14,7 @@ object Bytes {
     /**
      * Pretty prints [input] bytes in human-readable format (base 2, 1024).
      */
+    @Suppress("MagicNumber")
     fun <T : Number> prettyPrint(input: T): String {
         val bytes = input.toLong()
         val absoluteBytes = if (bytes == Long.MIN_VALUE) Long.MAX_VALUE else abs(bytes)
@@ -28,6 +30,6 @@ object Bytes {
             i -= 10
         }
         value *= java.lang.Long.signum(bytes).toLong()
-        return String.format("%.1f %ciB", value / 1024.0, ci.current())
+        return String.format(Locale.US, "%.1f %ciB", value / 1024.0, ci.current())
     }
 }

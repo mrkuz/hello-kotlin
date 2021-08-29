@@ -141,7 +141,7 @@ class BeanContainer(
             scope.async {
                 try {
                     val bean = factories[key]!!.invoke()
-                    if (bean === Unit) throw Exception("Unable to create kotlin.Unit")
+                    if (bean === Unit) throw BeanContainerException("Unable to create kotlin.Unit")
                     bean
                 } catch (e: Exception) {
                     logger.error("Create '${clazz.qualifiedName}' failed", e)

@@ -20,6 +20,8 @@ import net.bnb1.commons.utils.Resources
 import net.bnb1.commons.utils.toJson
 import java.nio.file.Path
 
+const val PRINT_HEAP_INFO_SHEDULE_MS = 30_000L
+
 fun main() {
     val applicationContext = start {
         exec("dev") { DevelopmentMode.start(Path.of(Environment.getCurrentWorkingDirectory()).parent) }
@@ -64,7 +66,7 @@ fun main() {
         event<ShutdownEvent> { logger.debug("Shutting down") }
 
         // Tasks
-        schedule(0L, 30_000L) { logger.debug { get<ApplicationInfo>().heap() } }
+        schedule(0L, PRINT_HEAP_INFO_SHEDULE_MS) { logger.debug { get<ApplicationInfo>().heap() } }
     }
 
     applicationContext.block()
