@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package net.bnb1.commons.http
 
 /**

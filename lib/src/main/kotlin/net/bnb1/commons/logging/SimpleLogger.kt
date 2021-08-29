@@ -10,6 +10,8 @@ import java.time.format.DateTimeFormatter
 @OptIn(ExperimentalCoroutinesApi::class, ObsoleteCoroutinesApi::class)
 private val scope = CoroutineScope(newSingleThreadContext("logger"))
 
+const val MAX_LEVEL_CHARS = 5
+
 /**
  * Simple logger implementation printing the messages to `stdout`.
  *
@@ -82,7 +84,7 @@ class SimpleLogger(
             append(ZonedDateTime.now().format(formatter))
             append(" [")
             append(thread)
-            append("] ${level.name.padEnd(5)} ")
+            append("] ${level.name.padEnd(MAX_LEVEL_CHARS)} ")
             append(name)
             append(" - ")
             append(message)

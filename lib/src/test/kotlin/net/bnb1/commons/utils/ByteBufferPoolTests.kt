@@ -3,7 +3,7 @@ package net.bnb1.commons.utils
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import java.util.*
+import java.util.Collections
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executors
@@ -27,7 +27,7 @@ class ByteBufferPoolTests : FunSpec({
         val executor = Executors.newFixedThreadPool(8)
         val latch = CountDownLatch(100)
         val buffers = Collections.newSetFromMap(ConcurrentHashMap<Int, Boolean>())
-        for (i in 0 until latch.count) {
+        repeat(latch.count.toInt()) {
             executor.submit {
                 val buffer = pool.allocate()
                 buffers.add(buffer.identityHashCode())
@@ -46,7 +46,7 @@ class ByteBufferPoolTests : FunSpec({
         val executor = Executors.newFixedThreadPool(8)
         val latch = CountDownLatch(100)
         val buffers = Collections.synchronizedSet(mutableSetOf<Int>())
-        for (i in 0 until latch.count) {
+        repeat(latch.count.toInt()) {
             executor.submit {
                 val buffer = pool.allocate()
                 buffers.add(buffer.identityHashCode())

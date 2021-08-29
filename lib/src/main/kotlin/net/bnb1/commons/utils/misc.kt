@@ -8,6 +8,7 @@ fun Any?.identityHashCode(): Int = this?.let { System.identityHashCode(this) } ?
 /**
  * Returns the reference ID of an object.
  */
+@Suppress("MagicNumber")
 fun Any?.identity(): String? {
     if (this == null) {
         return null

@@ -13,6 +13,8 @@ import java.time.Instant
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
+const val MILLIS_IN_SECOND = 1000
+
 /**
  * Provides access to application details in human-readable format.
  */
@@ -43,7 +45,8 @@ class ApplicationInfo(
         val timestamp = ZonedDateTime
             .ofInstant(Instant.ofEpochSecond(buildProperties.timestamp), UTC.zone())
             .format(formatter)
-        val uptime = "${runtimeBean.uptime / 1000}.${runtimeBean.uptime % 1000}s"
+
+        val uptime = "${runtimeBean.uptime / MILLIS_IN_SECOND}.${runtimeBean.uptime % MILLIS_IN_SECOND}s"
         return """
                 |Application started: ${applicationProperties.application.name} ($uptime)
                 |

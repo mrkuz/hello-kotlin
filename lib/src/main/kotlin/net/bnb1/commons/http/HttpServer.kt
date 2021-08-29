@@ -1,3 +1,5 @@
+@file:Suppress("FunctionNaming")
+
 package net.bnb1.commons.http
 
 import kotlinx.coroutines.*
@@ -125,24 +127,31 @@ class HttpServer(
 
     private fun mainLoop() {
         while (support.isRunning()) {
-            selector.select(connectionTimeout)
-            val keys = selector.selectedKeys().iterator()
-            while (keys.hasNext()) {
-                val key = keys.next()
-                keys.remove()
-                handleKey(key)
-            }
+            select()
+            closeTimedOutChannels()
+        }
+    }
 
-            for (key in selector.keys()) {
-                if (key.attachment() != null) {
-                    val channel = key.channel() as SocketChannel
-                    val attachment = key.attachment() as Attachment
-                    val elapsed = System.currentTimeMillis() - attachment.timestamp
-                    if (elapsed > connectionTimeout) {
-                        logger.debug("Connection timed out")
-                        channel.close()
-                        key.cancel()
-                    }
+    private fun select() {
+        selector.select(connectionTimeout)
+        val keys = selector.selectedKeys().iterator()
+        while (keys.hasNext()) {
+            val key = keys.next()
+            keys.remove()
+            handleKey(key)
+        }
+    }
+
+    private fun closeTimedOutChannels() {
+        for (key in selector.keys()) {
+            if (key.attachment() != null) {
+                val channel = key.channel() as SocketChannel
+                val attachment = key.attachment() as Attachment
+                val elapsed = System.currentTimeMillis() - attachment.timestamp
+                if (elapsed > connectionTimeout) {
+                    logger.debug("Connection timed out")
+                    channel.close()
+                    key.cancel()
                 }
             }
         }
