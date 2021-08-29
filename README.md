@@ -57,18 +57,7 @@ The build process is configured using Gradle Kotlin DSL.
 
 ## Used Gradle plugins
 
-- Versions: Checks for dependency updates ([Link](https://plugins.gradle.org/plugin/com.github.ben-manes.versions)))
-- Dokka: Creates KDoc documentation ([Link](https://plugins.gradle.org/plugin/org.jetbrains.dokka))
-- Shadow: Creates Fat Jar ([Link](https://plugins.gradle.org/plugin/com.github.johnrengelman.shadow))
-- Jib: Containerizes app ([Link](https://plugins.gradle.org/plugin/com.google.cloud.tools.jib))
-- Test Logger: Prints test logs to console ([Link](https://plugins.gradle.org/plugin/com.adarshr.test-logger))
-- kotlinx.benchmark: Runs JMH benchmarks ([Link](https://plugins.gradle.org/plugin/org.jetbrains.kotlinx.benchmark))
-- Ktlint Gradle: Runs ktlint ([Link](https://plugins.gradle.org/plugin/org.jlleitschuh.gradle.ktlint))
-
-## Custom extensions
-
-- There is a file 'project.properties' in the root direcotry, which is used for build configuration
-- Building the project creates a file 'build.properties', with information like timestamp, commit, ...
+- Kradle: Swiss army knife for Kotlin development ([Link](https://github.com/mrkuz/kradle))
 
 ## Useful Gradle tasks
 
@@ -81,6 +70,7 @@ The build process is configured using Gradle Kotlin DSL.
 - Run tests: `./gradlew test`
 - Run benchmarks: `./gradlew runBenchmarks`
 - Build project and create JAR: `./gradlew build`
+- Create runnabale Uber-JAR: `./gradlew uberJar`
 - Build Docker image: `./gradlew buildImage`
-- Build documentation: `./gradlew generateDocumentation``
+- Build documentation: `./gradlew generateDocumentation`
 - Update Gradle wrapper: `./gradlew wrapper --gradle-version=X.Y.Z`
