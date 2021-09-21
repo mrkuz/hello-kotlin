@@ -16,6 +16,9 @@ kradle {
         useKotest()
         useMockk()
     }
+    uberJar {
+        minimize(true)
+    }
     image {
         ports.add(8080)
         javaOpts("-Xmx16M -XX:MaxMetaspaceSize=32M -XX:ReservedCodeCacheSize=8M -XX:MaxDirectMemorySize=8M -Xss1M")

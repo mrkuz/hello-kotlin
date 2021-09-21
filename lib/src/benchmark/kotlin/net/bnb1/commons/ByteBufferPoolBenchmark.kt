@@ -6,6 +6,8 @@ import org.openjdk.jmh.infra.Blackhole
 import java.nio.ByteBuffer
 import java.util.concurrent.TimeUnit
 
+const val DEFAULT_CAPACITY = 512
+
 @State(Scope.Benchmark)
 @Fork(1)
 @Warmup(iterations = 0)
@@ -18,26 +20,26 @@ class KtsTestBenchmark {
 
     @Setup
     fun init() {
-        pool = ByteBufferPool(1, 512)
+        pool = ByteBufferPool(1, DEFAULT_CAPACITY)
     }
 
     @Benchmark
     fun allocate(blackhole: Blackhole) {
         blackhole {
-            ByteBuffer.allocate(512)
+            ByteBuffer.allocate(DEFAULT_CAPACITY)
         }
     }
 
     @Benchmark
     fun allocateDirect(blackhole: Blackhole) {
         blackhole {
-            ByteBuffer.allocateDirect(512)
+            ByteBuffer.allocateDirect(DEFAULT_CAPACITY)
         }
     }
 
     @Benchmark
-    fun allocatePool(blackhole: Blackhole) {
-        val buffer = pool.allocate(512)
+    fun allocatePool() {
+        val buffer = pool.allocate(DEFAULT_CAPACITY)
         pool.release(buffer)
     }
 }

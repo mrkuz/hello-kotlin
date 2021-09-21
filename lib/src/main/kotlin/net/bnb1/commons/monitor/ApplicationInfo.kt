@@ -43,14 +43,14 @@ class ApplicationInfo(
     fun full(): String {
         val runtimeBean = ManagementFactory.getRuntimeMXBean()
         val timestamp = ZonedDateTime
-            .ofInstant(Instant.ofEpochSecond(buildProperties.timestamp), UTC.zone())
+            .ofInstant(Instant.ofEpochSecond(buildProperties.build.timestamp), UTC.zone())
             .format(formatter)
 
         val uptime = "${runtimeBean.uptime / MILLIS_IN_SECOND}.${runtimeBean.uptime % MILLIS_IN_SECOND}s"
         return """
                 |Application started: ${applicationProperties.application.name} ($uptime)
                 |
-                |Version: ${buildProperties.version} (${buildProperties.git.commitId}, $timestamp UTC)
+                |Version: ${buildProperties.project.version} (${buildProperties.git.commitId}, $timestamp UTC)
                 |Profile: ${Environment.getActiveProfile()}
                 |
                 |JVM: ${runtimeBean.vmVendor} ${runtimeBean.vmName} (${runtimeBean.vmVersion})
