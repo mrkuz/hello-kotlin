@@ -1,6 +1,6 @@
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.5.0"
-    id("net.bnb1.kradle-lib") version "main-SNAPSHOT"
+    id("net.bitsandbobs.kradle-lib") version "main-SNAPSHOT"
 }
 
 dependencies {

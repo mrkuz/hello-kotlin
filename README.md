@@ -65,7 +65,7 @@ The build process is configured using Gradle Kotlin DSL.
 - Clean: `./gradlew clean`
 - Check for dependency updates: `./gradlew showDependencyUpdates`
 - Run application: `./gradlew run`
-- Continuous run: `./gradlew run -t`
+- Continuous run with automatic restarts: `./gradlew dev -t`
 - Run ktlint: `./gradlew lint`
 - Run tests: `./gradlew test`
 - Run benchmarks: `./gradlew runBenchmarks`

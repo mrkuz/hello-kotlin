@@ -3,7 +3,6 @@ package net.bnb1.hello
 import net.bnb1.commons.beans.ReadyEvent
 import net.bnb1.commons.beans.ShutdownEvent
 import net.bnb1.commons.beans.start
-import net.bnb1.commons.dev.DevelopmentMode
 import net.bnb1.commons.event.EventBus
 import net.bnb1.commons.http.HttpServer
 import net.bnb1.commons.http.MediaType
@@ -15,17 +14,13 @@ import net.bnb1.commons.monitor.HealthStatus
 import net.bnb1.commons.properties.ApplicationProperties
 import net.bnb1.commons.properties.BuildProperties
 import net.bnb1.commons.tasks.TaskScheduler
-import net.bnb1.commons.utils.Environment
 import net.bnb1.commons.utils.Resources
 import net.bnb1.commons.utils.toJson
-import java.nio.file.Path
 
-const val PRINT_HEAP_INFO_SHEDULE_MS = 30_000L
+const val PRINT_HEAP_INFO_SCHEDULE_MS = 30_000L
 
 fun main() {
     val applicationContext = start {
-        exec("dev") { DevelopmentMode.start(Path.of(Environment.getCurrentWorkingDirectory()).parent) }
-
         // Beans
         single { LoggerFactory.create("n.b.o.Application") }
         single { Resources.loadConf<ApplicationProperties>("/application.conf") }
@@ -66,7 +61,7 @@ fun main() {
         event<ShutdownEvent> { logger.debug("Shutting down") }
 
         // Tasks
-        schedule(0L, PRINT_HEAP_INFO_SHEDULE_MS) { logger.debug { get<ApplicationInfo>().heap() } }
+        schedule(0L, PRINT_HEAP_INFO_SCHEDULE_MS) { logger.debug { get<ApplicationInfo>().heap() } }
     }
 
     applicationContext.block()
