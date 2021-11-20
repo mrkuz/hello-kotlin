@@ -1,4 +1,5 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 import kotlinx.benchmark.gradle.BenchmarksExtension
 import kotlinx.benchmark.gradle.JvmBenchmarkTarget
 import net.bnb1.gradle.ProjectProperties
@@ -18,6 +19,7 @@ plugins {
     id("org.jetbrains.dokka")
     id("com.adarshr.test-logger")
     id("org.jlleitschuh.gradle.ktlint")
+    id("io.gitlab.arturbosch.detekt")
 }
 
 repositories {
@@ -57,6 +59,11 @@ configure<KtlintExtension> {
     enableExperimentalRules.set(true)
     disabledRules.set(setOf("no-wildcard-imports"))
     version.set("0.43.0")
+}
+
+configure<DetektExtension> {
+    config.setFrom(project.rootDir.resolve("detekt-config.yml"))
+    buildUponDefaultConfig = false
 }
 
 tasks.named<Test>("test").configure {

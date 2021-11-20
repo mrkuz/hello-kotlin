@@ -78,6 +78,7 @@ The build process is configured using Gradle Kotlin DSL.
 - Run application: `./gradlew run`
 - Continuous run: `./gradlew run -t`
 - Run ktlint: `./gradlew ktlintCheck`
+- Run detekt: `./gradlew detekt`
 - Run tests: `./gradlew test`
 - Run benchmarks: `./gradlew benchmark`
 - Build project and create JAR: `./gradlew build`
