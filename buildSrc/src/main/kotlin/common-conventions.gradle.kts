@@ -1,5 +1,6 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import kotlinx.benchmark.gradle.BenchmarksExtension
+import kotlinx.benchmark.gradle.JvmBenchmarkTarget
 import net.bnb1.gradle.ProjectProperties
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.gradle.jvm.tasks.Jar
@@ -26,28 +27,36 @@ repositories {
 dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
     // Testing
     testImplementation("org.jetbrains.kotlin:kotlin-test")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.2")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.2")
-    testImplementation("io.kotest:kotest-runner-junit5:4.6.0")
-    testImplementation("io.kotest:kotest-assertions-core:4.6.0")
-    testImplementation("io.mockk:mockk:1.11.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
+    testImplementation("io.kotest:kotest-runner-junit5:4.6.3")
+    testImplementation("io.kotest:kotest-assertions-core:4.6.3")
+    testImplementation("io.mockk:mockk:1.12.1")
 }
 
 ProjectProperties.load(rootDir.absolutePath)
 
+val jvmVersion = "11"
+
+tasks.withType<JavaCompile>().configureEach {
+    sourceCompatibility = jvmVersion
+    targetCompatibility = jvmVersion
+}
+
 tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn")
-        jvmTarget = "1.8"
+        jvmTarget = jvmVersion
     }
 }
 
 configure<KtlintExtension> {
     enableExperimentalRules.set(true)
     disabledRules.set(setOf("no-wildcard-imports"))
+    version.set("0.43.0")
 }
 
 tasks.named<Test>("test").configure {
@@ -65,13 +74,16 @@ configure<AllOpenExtension> {
 
 configure<BenchmarksExtension> {
     targets {
-        register("benchmark")
+        register("benchmark") {
+            (this as JvmBenchmarkTarget).jmhVersion = "1.33"
+        }
     }
 }
 
 // Create a new source set for benchmarks
 val mainSourceSet: SourceSet = sourceSets.getByName("main")
 sourceSets.create("benchmark") {
+    @Suppress("DEPRECATION")
     withConvention(org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet::class) {
         kotlin.srcDirs("src/benchmark/kotlin")
         compileClasspath += mainSourceSet.output + mainSourceSet.compileClasspath
