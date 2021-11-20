@@ -107,9 +107,12 @@ tasks.named<DependencyUpdatesTask>("dependencyUpdates").configure {
     checkForGradleUpdate = true
     rejectVersionIf {
         // Exclude milestone builds and RCs
-        val milestone = "^.*-M[0-9]+$".toRegex()
-        val releaseCandidate = "^.*-RC$".toRegex()
-        milestone.matches(this.candidate.version) || releaseCandidate.matches(this.candidate.version)
+        val alpha = "^.*-alpha[.-]?[0-9]*$".toRegex()
+        val milestone = "^.*[.-]M[.-]?[0-9]+$".toRegex()
+        val releaseCandidate = "^.*-RC[.-]?[0-9]*$".toRegex()
+        alpha.matches(candidate.version)
+            || milestone.matches(candidate.version)
+            || releaseCandidate.matches(candidate.version)
     }
 }
 
