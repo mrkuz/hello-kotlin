@@ -1,6 +1,6 @@
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.6.0"
-    id("net.bitsandbobs.kradle-lib") version "main-SNAPSHOT"
+    id("net.bitsandbobs.kradle") version "main-SNAPSHOT"
 }
 
 dependencies {
@@ -18,8 +18,5 @@ group = "net.bnb1.hello"
 version = "1.0-SNAPSHOT"
 
 kradle {
-    tests {
-        useKotest()
-        useMockk()
-    }
+    kotlinJvmLibrary.activate()
 }
