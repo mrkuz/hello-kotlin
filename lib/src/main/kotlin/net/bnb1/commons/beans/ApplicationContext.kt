@@ -122,7 +122,7 @@ class ApplicationContext(val beanContainer: BeanContainer) : LifecycleComponent 
     }
 
     /**
-     * Subscribes [listener] for an specific event of type [T].
+     * Subscribes [listener] for a specific event of type [T].
      *
      * Throws an [Exception] if no [EventBus] bean was registered.
      */

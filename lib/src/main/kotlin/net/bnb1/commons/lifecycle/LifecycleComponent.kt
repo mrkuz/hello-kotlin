@@ -2,7 +2,7 @@ package net.bnb1.commons.lifecycle
 
 /**
  * Used to represent a component with a lifecycle.
- * This means, they it can be started and stopped.
+ * This means, they can be started and stopped.
  */
 interface LifecycleComponent {
 
