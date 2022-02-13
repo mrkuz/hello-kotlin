@@ -7,7 +7,7 @@ import java.io.StringWriter
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
-@OptIn(ExperimentalCoroutinesApi::class, ObsoleteCoroutinesApi::class)
+@OptIn(ExperimentalCoroutinesApi::class, ObsoleteCoroutinesApi::class, DelicateCoroutinesApi::class)
 private val scope = CoroutineScope(newSingleThreadContext("logger"))
 
 const val MAX_LEVEL_CHARS = 5

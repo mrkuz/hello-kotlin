@@ -1,6 +1,6 @@
 package net.bnb1.commons.utils
 
-import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.ExperimentalTime
 
 /**
@@ -8,4 +8,4 @@ import kotlin.time.ExperimentalTime
  */
 @OptIn(ExperimentalTime::class)
 val Number.milliseconds
-    get() = Duration.milliseconds(this.toLong())
+    get() = this.toLong().milliseconds

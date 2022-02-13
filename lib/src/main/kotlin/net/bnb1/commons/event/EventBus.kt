@@ -8,7 +8,7 @@ import kotlin.reflect.KClass
 /**
  * Simple event bus.
  */
-@OptIn(ExperimentalCoroutinesApi::class, ObsoleteCoroutinesApi::class)
+@OptIn(ExperimentalCoroutinesApi::class, ObsoleteCoroutinesApi::class, DelicateCoroutinesApi::class)
 class EventBus(dispatcher: CoroutineDispatcher = newSingleThreadContext("event")) : LifecycleComponent {
 
     private val scope = CoroutineScope(dispatcher)

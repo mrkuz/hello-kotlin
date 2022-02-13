@@ -21,7 +21,7 @@ private const val BUFFER_SIZE: Int = 512
  * Simple non-blocking HTTP server, listening on [port] (default 8080).
  */
 @Suppress("BlockingMethodInNonBlockingContext")
-@OptIn(ExperimentalCoroutinesApi::class, ObsoleteCoroutinesApi::class)
+@OptIn(ExperimentalCoroutinesApi::class, ObsoleteCoroutinesApi::class, DelicateCoroutinesApi::class)
 class HttpServer(
     private val port: Int = 8080,
     private val connectionTimeout: Long = 2000,
