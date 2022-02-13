@@ -1,6 +1,7 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.6.0"
-    id("net.bitsandbobs.kradle") version "main-SNAPSHOT"
+    id("org.jetbrains.kotlin.jvm")
+    id("org.jetbrains.dokka")
+    id("net.bitsandbobs.kradle")
 }
 
 dependencies {
@@ -18,5 +19,15 @@ group = "net.bnb1.hello"
 version = "1.0-SNAPSHOT"
 
 kradle {
-    kotlinJvmLibrary.activate()
+    kotlinJvmLibrary {
+        jvm {
+            kotlin {
+                codeAnalysis {
+                    detekt {
+                        configFile("../detekt-config.yml")
+                    }
+                }
+            }
+        }
+    }
 }

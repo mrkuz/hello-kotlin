@@ -68,9 +68,10 @@ The build process is configured using Gradle Kotlin DSL.
 - Continuous run with automatic restarts: `./gradlew dev -t`
 - Run ktlint: `./gradlew lint`
 - Run tests: `./gradlew test`
+- Generate test coverage report: `./gradlew analyzeTestCoverage`
 - Run benchmarks: `./gradlew runBenchmarks`
 - Build project and create JAR: `./gradlew build`
-- Create runnabale Uber-JAR: `./gradlew uberJar`
+- Create runnable Uber-JAR: `./gradlew uberJar`
 - Build Docker image: `./gradlew buildImage`
 - Build documentation: `./gradlew generateDocumentation`
 - Update Gradle wrapper: `./gradlew wrapper --gradle-version=X.Y.Z`
