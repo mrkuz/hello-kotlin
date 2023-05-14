@@ -22,6 +22,11 @@ kradle {
     kotlinJvmLibrary {
         jvm {
             kotlin {
+                lint {
+                    ktlint {
+                        rules.disable("filename")
+                    }
+                }
                 codeAnalysis {
                     detekt {
                         configFile("../detekt-config.yml")

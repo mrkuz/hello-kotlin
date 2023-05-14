@@ -193,7 +193,7 @@ class HttpServerTests : FunSpec({
             test("Send request with timeout") {
                 val socket = Socket("localhost", port)
                 socket.getOutputStream().write("GET /te".toByteArray())
-                delay(200)
+                delay(300)
                 shouldThrow<SocketException> {
                     socket.getOutputStream().write('s'.code)
                     socket.getOutputStream().write('t'.code)

@@ -2,7 +2,12 @@
 
 package net.bnb1.commons.http
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.newFixedThreadPoolContext
 import net.bnb1.commons.lifecycle.LifecycleComponent
 import net.bnb1.commons.lifecycle.LifecycleSupport
 import net.bnb1.commons.logging.logger
@@ -21,7 +26,7 @@ private const val BUFFER_SIZE: Int = 512
  * Simple non-blocking HTTP server, listening on [port] (default 8080).
  */
 @Suppress("BlockingMethodInNonBlockingContext")
-@OptIn(ExperimentalCoroutinesApi::class, ObsoleteCoroutinesApi::class, DelicateCoroutinesApi::class)
+@OptIn(DelicateCoroutinesApi::class)
 class HttpServer(
     private val port: Int = 8080,
     private val connectionTimeout: Long = 2000,
@@ -183,6 +188,7 @@ class HttpServer(
 
             val buffer = allocate(BUFFER_SIZE)
             var disconnected = false
+            @Suppress("LoopWithTooManyJumpStatements")
             while (true) {
                 val readBytes = channel.read(buffer)
                 // Client disconnected

@@ -173,7 +173,7 @@ class BeanContainerTests : FunSpec({
     }
 
     test("Fail on start") {
-        container.exec { throw Exception("Fail") }
+        container.exec { throw BeanContainerException("Fail") }
         shouldThrow<LifecycleException> { container.start() }
     }
 })

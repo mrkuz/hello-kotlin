@@ -1,6 +1,11 @@
 package net.bnb1.commons.tasks
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.newSingleThreadContext
 import net.bnb1.commons.lifecycle.LifecycleComponent
 import net.bnb1.commons.lifecycle.LifecycleSupport
 import java.util.Timer
@@ -11,7 +16,7 @@ import kotlin.concurrent.schedule
  *
  * The scheduler needs to be [started][start].
  */
-@OptIn(ExperimentalCoroutinesApi::class, ObsoleteCoroutinesApi::class, DelicateCoroutinesApi::class)
+@OptIn(DelicateCoroutinesApi::class)
 class TaskScheduler(dispatcher: CoroutineDispatcher = newSingleThreadContext("task")) :
     LifecycleComponent {
 

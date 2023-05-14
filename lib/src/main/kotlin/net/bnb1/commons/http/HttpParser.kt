@@ -70,7 +70,7 @@ class HttpParser(bufferSize: Int = 512) {
 
     private fun processLine(line: String) {
         if (linePos == 0) {
-            @Suppress("SwallowedException")
+            @Suppress("SwallowedException", "TooGenericExceptionCaught")
             try {
                 val (method, path, version) = line.split(" ")
                 result = result.copy(method = HttpMethod.valueOf(method), path = path)
@@ -93,7 +93,7 @@ class HttpParser(bufferSize: Int = 512) {
             return
         }
 
-        @Suppress("SwallowedException")
+        @Suppress("SwallowedException", "TooGenericExceptionCaught")
         try {
             val (name, value) = line.split(":", limit = 2)
             if (name.trim().equals(HttpHeader.CONTENT_LENGTH.headerName, ignoreCase = true)) {

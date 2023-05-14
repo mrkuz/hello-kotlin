@@ -1,13 +1,16 @@
 package net.bnb1.commons.logging
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.newSingleThreadContext
 import java.io.PrintStream
 import java.io.PrintWriter
 import java.io.StringWriter
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
-@OptIn(ExperimentalCoroutinesApi::class, ObsoleteCoroutinesApi::class, DelicateCoroutinesApi::class)
+@OptIn(DelicateCoroutinesApi::class)
 private val scope = CoroutineScope(newSingleThreadContext("logger"))
 
 const val MAX_LEVEL_CHARS = 5

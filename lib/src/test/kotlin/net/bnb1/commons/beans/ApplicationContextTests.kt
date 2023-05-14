@@ -264,7 +264,7 @@ class ApplicationContextTests : FunSpec({
     }
 
     test("Fail on start") {
-        context.exec { throw Exception("Fail") }
+        context.exec { throw BeanContainerException("Fail") }
         shouldThrow<LifecycleException> { context.start() }
     }
 

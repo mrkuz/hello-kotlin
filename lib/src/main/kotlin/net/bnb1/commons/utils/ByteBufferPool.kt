@@ -35,6 +35,7 @@ class ByteBufferPool(
     fun allocate(capacity: Int = defaultCapacity): ByteBuffer {
         var result: ByteBuffer? = null
         val unusedBuffers = mutableListOf<ByteBuffer>()
+        @Suppress("LoopWithTooManyJumpStatements")
         while (!buffers.isEmpty()) {
             val buffer = buffers.poll() ?: break
             if (buffer.capacity() >= capacity) {

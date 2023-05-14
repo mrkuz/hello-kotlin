@@ -1,6 +1,14 @@
 package net.bnb1.commons.beans
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.async
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import net.bnb1.commons.lifecycle.LifecycleComponent
 import net.bnb1.commons.lifecycle.LifecycleException
 import net.bnb1.commons.lifecycle.LifecycleSupport
@@ -12,7 +20,7 @@ import kotlin.reflect.KClass
 /**
  * Inversion of control container.
  */
-@OptIn(ExperimentalCoroutinesApi::class, ObsoleteCoroutinesApi::class)
+@OptIn(ExperimentalCoroutinesApi::class)
 class BeanContainer(
     private val name: String,
     val activeProfile: String = Environment.getActiveProfile(),
@@ -43,6 +51,7 @@ class BeanContainer(
         runBlocking {
             runnables.forEach {
                 scope.launch {
+                    @Suppress("TooGenericExceptionCaught")
                     try {
                         it.run()
                     } catch (e: Exception) {
@@ -139,6 +148,7 @@ class BeanContainer(
         val key = factories.keys.find { clazz.java.isAssignableFrom(it.java) } ?: return null
         return beans.computeIfAbsent(key) {
             scope.async {
+                @Suppress("TooGenericExceptionCaught")
                 try {
                     val bean = factories[key]!!.invoke()
                     if (bean === Unit) throw BeanContainerException("Unable to create kotlin.Unit")

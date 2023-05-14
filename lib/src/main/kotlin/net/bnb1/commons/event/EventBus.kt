@@ -1,6 +1,11 @@
 package net.bnb1.commons.event
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.newSingleThreadContext
 import net.bnb1.commons.lifecycle.LifecycleComponent
 import net.bnb1.commons.lifecycle.LifecycleSupport
 import kotlin.reflect.KClass
@@ -8,7 +13,7 @@ import kotlin.reflect.KClass
 /**
  * Simple event bus.
  */
-@OptIn(ExperimentalCoroutinesApi::class, ObsoleteCoroutinesApi::class, DelicateCoroutinesApi::class)
+@OptIn(DelicateCoroutinesApi::class)
 class EventBus(dispatcher: CoroutineDispatcher = newSingleThreadContext("event")) : LifecycleComponent {
 
     private val scope = CoroutineScope(dispatcher)
